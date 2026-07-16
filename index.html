@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>2048 Puzzle</title>
+  <meta name="description" content="A fast, animated 2048 puzzle game." />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <meta name="theme-color" content="#0b0b12" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="2048" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="splash-screen" id="splash-screen">
+    <img src="icon.png" alt="" class="splash-logo" />
+    <div class="splash-spinner"></div>
+  </div>
+
+  <div class="game-view" id="game-view">
+    <div class="game-topbar">
+      <button class="game-icon-btn" id="reset-btn" title="Reset game" aria-label="Reset game">&#8635;</button>
+      <div class="game-score-display">
+        <span class="game-score-live" id="game-score">0</span>
+        <span class="game-score-best-label">BEST <span id="game-best">0</span></span>
+      </div>
+      <button class="game-icon-btn" id="settings-btn" title="Settings" aria-label="Settings">&#9881;</button>
+    </div>
+
+    <div class="game-wrapper">
+      <div class="game-card">
+        <div class="game-card-header">
+          <h1>2048</h1>
+        </div>
+
+        <div class="game-board-wrap">
+          <div class="game-board" id="game-board"></div>
+
+          <div class="game-overlay hidden" id="game-overlay">
+            <div class="game-overlay-message" id="game-overlay-message"></div>
+            <button class="btn btn-primary" id="game-overlay-btn">Try Again</button>
+          </div>
+        </div>
+
+        <button class="install-btn" id="install-btn">&#11015; Install Puzzle Game</button>
+      </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="settings-modal">
+      <div class="modal settings-modal">
+        <div class="modal-header">
+          <span class="password-modal-icon">&#9881;</span>
+          <h3>Settings</h3>
+          <button class="icon-btn settings-close-btn" id="settings-close">&times;</button>
+        </div>
+        <div class="settings-body">
+          <div class="theme-toggle-row">
+            <span>Day / Night</span>
+            <label class="switch">
+              <input type="checkbox" id="game-theme-toggle" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <button class="btn btn-primary settings-enter-btn" id="settings-enter-btn">Enter</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="puzzle-password-modal">
+      <div class="modal password-modal">
+        <div class="modal-header">
+          <span class="password-modal-icon">&#128274;</span>
+          <h3>Enter Password</h3>
+        </div>
+        <form id="puzzle-password-form">
+          <input type="password" class="text-input" id="puzzle-password-input" placeholder="Password" autocomplete="off" />
+          <p class="password-modal-error hidden" id="puzzle-password-error">Incorrect password. Try again.</p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-ghost" id="puzzle-password-cancel">Cancel</button>
+            <button type="submit" class="btn btn-primary">Unlock</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="chat-root" class="hidden">
+    <div class="secret-shell">
+      <div class="secret-header">
+        <button class="icon-btn" id="secret-back-btn" title="Back" aria-label="Back">&#8592;</button>
+      </div>
+
+      <div class="secret-messages" id="secret-messages"></div>
+
+      <div class="composer">
+        <button class="icon-btn" id="secret-emoji-btn" title="Emoji">&#128512;</button>
+        <button class="icon-btn" id="secret-attach-btn" title="Attach photo or video">&#128206;</button>
+        <input type="file" id="secret-media-input" accept="image/*,video/*" class="hidden" />
+        <textarea id="secret-message-input" placeholder="Type a message" rows="1"></textarea>
+        <button class="send-btn" id="secret-send-btn" title="Send">&#10148;</button>
+        <div class="emoji-picker hidden" id="secret-emoji-picker"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" defer></script>
+  <script src="config.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/socket.js" defer></script>
+  <script src="js/emoji.js" defer></script>
+  <script src="js/secret.js" defer></script>
+  <script src="js/game.js" defer></script>
+  <script src="js/pwa.js" defer></script>
+</body>
+</html>
